@@ -37,6 +37,18 @@ loadSourceFromServer(){
     this.loadSourceFromServer();
   }
 
+  handleUrlreadcountChange(id, count) {
+    ajax.patch(`${baseUrl}/urlpublish/${id}/`)        
+        .send({urlreadcount:++count})
+        .end((error, response) => {
+          if(!error && response) {
+            console.log('success');
+          } else {
+            console.log('fail');
+          }
+        })
+  } 
+
   handlePageClick = (data) => {
     let selected = data.selected;
     let offset = Math.ceil(selected * this.state.perPage);
@@ -75,7 +87,7 @@ loadSourceFromServer(){
                     <p>{urlintroduce}</p>
                     <LinkContainer to={`source/${id}`}>
                       <NavItem>                           {/* 防止<Button> 被自动转换成<a>导致样式混乱 */}
-                        <Button bsStyle="danger">了解详情</Button>
+                        <Button bsStyle="danger" onClick={ this.handleUrlreadcountChange.bind(this, id, urlReadCount) }>了解详情</Button>
                       </NavItem>
                     </LinkContainer>
                   </div>

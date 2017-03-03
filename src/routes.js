@@ -7,6 +7,7 @@ import SourceShare from './pages/SourceShare';
 import WriteSource from './pages/WriteSource';
 import Login from './pages/Login';
 import UserInterface from './pages/UserInterface';
+import Suggestion from './pages/Suggestion';
 
 const routes = (
   <Route path="/" component={App}>
@@ -16,6 +17,7 @@ const routes = (
     <Route path="new" component={WriteSource} />
     <Route path="login" component={Login} />
     <Route path="user/:id" component={UserInterface} />
+    <Route path="suggestion" component={Suggestion} />
   </Route> 
 );
 

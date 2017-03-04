@@ -116,7 +116,7 @@ class SourceShare extends React.Component{
               {this.state.resource.urlintroduce}
             </p>
             <p>
-              <a href={this.state.resource.urlmessage}>{this.state.resource.urlmessage}</a>
+              <a href={this.state.resource.urlmessage} target="blank">{this.state.resource.urlmessage}</a>
             </p>
           </div>
         </div>

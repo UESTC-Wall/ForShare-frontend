@@ -2,6 +2,7 @@ import React from 'react';
 import { NavDropdown, NavItem, MenuItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import{ observer } from 'mobx-react';
+import { browserHistory } from 'react-router';
 
 import { LoginState } from '../store';
 
@@ -10,6 +11,12 @@ class LoginStatusUI extends React.Component{
 
   logout = () => {
     LoginState.logout();
+
+    let currentLocation = this.context.location.pathname.slice(0,4);
+    if(currentLocation === 'user'){
+      browserHistory.push('/sourcelist');
+    }
+    
   }
 
   render(){
@@ -32,4 +39,7 @@ class LoginStatusUI extends React.Component{
   }
 }
 
+LoginStatusUI.contextTypes = {
+    location: React.PropTypes.object
+ }
 export default LoginStatusUI;

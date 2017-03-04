@@ -37,7 +37,11 @@ loadSourceFromServer(){
     this.loadSourceFromServer();
   }
 
+<<<<<<< HEAD
   handleUrlreadcountChange(id, count) {
+=======
+ handleUrlreadcountChange(id, count) {
+>>>>>>> refs/remotes/origin/master
     ajax.patch(`${baseUrl}/urlpublish/${id}/`)        
         .send({urlreadcount:++count})
         .end((error, response) => {

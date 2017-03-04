@@ -40,7 +40,7 @@ class UserInterface extends React.Component{
               const publishTime = urlpublish.slice(7, 23);
               const publishContent = urlpublish.slice(33);
               return(
-                <div className="publish">
+                <div className="publish" key={index}>
                   <p>{publishTime}</p>
                   <p>{publishContent}</p>
                 </div>

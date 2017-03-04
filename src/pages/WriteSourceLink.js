@@ -2,18 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import ajax from 'superagent';
 import { FormGroup, FormControl, Button } from 'react-bootstrap';
-import { bootstrapUtils } from 'react-bootstrap/lib/utils';
 import{ observer } from 'mobx-react';
 import { browserHistory } from 'react-router';
 
 import baseUrl from './config';
 import { LoginState } from '../store';
-import './WriteSource.css';
-
-bootstrapUtils.addStyle(FormControl, 'custom');
+import './WriteSourceLink.css';
 
 @observer
-class WriteSource extends React.Component{
+class WriteSourceLink extends React.Component{
 
   constructor(props){
     super(props);
@@ -27,7 +24,8 @@ class WriteSource extends React.Component{
   publish = () => {
     
     if(!LoginState.completed){
-      browserHistory.push('login');
+      browserHistory.push('/login');
+      alert("请先登录");
       return;
     }
     const urlMessage = ReactDOM.findDOMNode(this.refs.urlValue).value.trim();
@@ -59,7 +57,6 @@ class WriteSource extends React.Component{
 
   deleteInputValue = () => { 
     ReactDOM.findDOMNode(this.refs.urlValue).value = "";
-    ReactDOM.findDOMNode(this.refs.introValue).value = "";
   }
   
   errorReminder(){
@@ -72,7 +69,7 @@ class WriteSource extends React.Component{
   render(){
     return(
       <div key="write-source" className="write-source">
-        <h1 className="title-h">写文章</h1>
+        <h1 className="title-h">上传链接</h1>
         <p className="title-p"><label className="of"></label>在这里添加链接<label className="on"></label></p>
         <form>
           <FormGroup bsSize="large" validationState={this.state.urlValueValidationState}>
@@ -85,4 +82,4 @@ class WriteSource extends React.Component{
   }
 }
 
-export default WriteSource;
+export default WriteSourceLink;

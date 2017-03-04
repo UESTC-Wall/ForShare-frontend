@@ -28,8 +28,6 @@ function GetIEVersion() {
 
 class Footer extends React.Component{
   render() {
-    let browser = navigator.appName;
-    console.log(browser);
     if(GetIEVersion() > 0){
       return null;
     }else{
@@ -46,6 +44,12 @@ class Footer extends React.Component{
 
 class App extends React.Component {
 
+  getChildContext = () => {
+    return {
+      location: this.props.location
+    }
+  }
+
   render() {
     return (
       <div className="header">
@@ -59,7 +63,10 @@ class App extends React.Component {
             <LinkContainer to="/sourcelist" activeHref="active">
               <NavItem>资源分享</NavItem>
             </LinkContainer>
-            <LinkContainer to="/new" activeHref="active">
+            <LinkContainer to="/newlink" activeHref="active">
+              <NavItem>上传链接</NavItem>
+            </LinkContainer>
+            <LinkContainer to="/newarticle" activeHref="active">
               <NavItem>写文章</NavItem>
             </LinkContainer>
           </Nav>
@@ -76,4 +83,7 @@ class App extends React.Component {
   }
 }
 
+App.childContextTypes = {
+    location: React.PropTypes.object
+}
 export default App;

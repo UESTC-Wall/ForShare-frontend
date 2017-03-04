@@ -1,0 +1,47 @@
+.editor{
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  align-items: center;
+}
+.editor li{
+  list-style-type: disc;
+}
+.editor .title-h{
+  display: block;
+}
+.editor .title-p {
+    width: 400px;
+    display: -webkit-flex; /* Safari */
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    line-height: 1.8em;
+    color: #fa4b2a;
+    font-weight: 400;
+}
+.editor label {
+    width: 24%;
+    height: 2px;
+    margin-top: 3%;
+    display: inline-block;
+    max-width: 100%;
+    font-weight: bold;
+    background: #303030;
+}
+.editor form{
+  margin-top: 2em;
+  width: 70%;
+}
+.editor form .form-control-custom{
+  border-radius: 0;
+}
+.editor .simditor{
+  width: 70%;
+}
+.editor button{
+  margin-top: 1em;
+  width: 20%;
+  border-radius: 3px;
+}

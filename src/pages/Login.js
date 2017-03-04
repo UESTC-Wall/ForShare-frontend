@@ -24,7 +24,7 @@ class Login extends React.Component{
     }
   }
   
-  pushUserMessage(){
+  pushUserMessage = () => {
     const content = {
       username: ReactDOM.findDOMNode(this.refs.userName).value,
       password: ReactDOM.findDOMNode(this.refs.passWord).value
@@ -38,7 +38,7 @@ class Login extends React.Component{
           this.errorReminder();
         } else {
           LoginState.login(response.body.username, response.body.token);
-          browserHistory.push('sourcelist');
+          browserHistory.push('/sourcelist');
           ajax.get(`${baseUrl}/users/`)
           .end((error, response) => {
             if (!error && response){
@@ -85,7 +85,7 @@ class Login extends React.Component{
             </InputGroup>
           </FormGroup>
         </form>
-        <Button bsStyle="danger" onClick={this.pushUserMessage.bind(this)}>登录</Button>
+        <Button bsStyle="danger" onClick={this.pushUserMessage}>登录</Button>
         <p className="error-reminder" ref="errorReminder"></p>
       </div>
     );

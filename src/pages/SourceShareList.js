@@ -125,7 +125,7 @@ loadSourceFromServer = () => {
                       评论量：{commentLength}
                     </p>
                     <p>{urlIntroduce}</p>
-                    <LinkContainer to={`${currentLocation}/${id}`}>
+                    <LinkContainer to={`/${currentLocation}/${id}`}>
                       <NavItem>                           {/* 防止<Button> 被自动转换成<a>导致样式混乱 */}
                         <Button bsStyle="danger" onClick={ this.handleUrlreadcountChange.bind(this, id, urlReadCount) }>了解详情</Button>
                       </NavItem>

@@ -1,17 +1,18 @@
 import React from 'react';
-import { FormGroup, FormControl, Button } from 'react-bootstrap';
+import { FormGroup, FormControl, Modal, Button } from 'react-bootstrap';
 import ReactDOM from 'react-dom';
 import ajax from 'superagent';
 
 import baseUrl from './config';
-import './Suggestion.css'
+import './Suggestion.css';
 
 class Suggestion extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            sugPlaceholder:"请输入你的建议...",
+            showModal: true,
+            sugPlaceholder: "写下你的建议...",
             sugValidationState: null
         }
     }
@@ -33,18 +34,18 @@ class Suggestion extends React.Component {
                 if(error || response.status !== 201) {
                     console.log('source push error!');
                     alert("发布失败，请稍后再试");
-                    // this.deleteInputValue();
+                    this.deleteInputValue();
                 } else {
                     console.log('yay got ' + JSON.stringify(response.body));
                     alert("发布成功");
-                    // this.deleteInputValue();
+                    this.deleteInputValue();
                 }
             })
     }
 
     errorReminder() {
         if(ReactDOM.findDOMNode(this.refs.sugValue).value.trim() === "") {
-            this.setState({ sugPlaceholder : "建议内容不能为空..." });
+            this.setState({ sugPlaceholder : "提交内容不能为空..." });
             this.setState({ sugValidationState : "error" });
         }
     }
@@ -53,21 +54,34 @@ class Suggestion extends React.Component {
         ReactDOM.findDOMNode(this.refs.sugValue).value = "";
     }
 
-
-
     render() {
-        return(
-            <div className="write-suggestion">
-                <p className="title">发表你的建议吧~</p>
-                <form>
-                    <FormGroup bsSize="large" validationState={this.state.sugValidationState}>
-                        <FormControl componentClass="textarea" placeholder={this.state.sugPlaceholder} ref = "sugValue"/>
-                    </FormGroup>
-                </form>    
-                <Button bsStyle="danger" bsSize="large" onClick={this.publish}>确认</Button>
+        let close = () => ({ showModal: false });
+
+        return (
+            <div>
+                <Modal 
+                show={ this.state.showModal }
+                onHide={ close }
+                dialogClassName="custom-modal"
+                >
+                    <Modal.Header closeButton>
+                        <Modal.Title>意见反馈</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <form>
+                            <FormGroup bsSize="large" validationState={this.state.sugValidationState}>
+                                <FormControl componentClass="textarea" placeholder={this.state.sugPlaceholder} ref="sugValue"/>
+                            </FormGroup>
+                        </form>
+                    </Modal.Body>    
+                    <Modal.Footer>
+                        <Button bsStyle="danger" onClick={close}>取消</Button>
+                        <Button bsStyle="danger" onClick={this.publish}>确认</Button>
+                    </Modal.Footer>    
+                </Modal> 
             </div>
         );
     }
 }
 
-export default Suggestion; 
+export default Suggestion;

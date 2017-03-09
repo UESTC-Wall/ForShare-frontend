@@ -14,50 +14,50 @@ import './SourceShare.css';
 
 bootstrapUtils.addStyle(FormControl, 'custom');
 
-class Content extends React.Component{
+export default function createSource(sourceType){
+  class Content extends React.Component{
   constructor(props){
     super(props);
   }
 
-  render(){
-    if(this.props.currentPathName !== "article"){
-      return(
-        <p>
-          <a href={this.props.linkUrl} target="blank">{this.props.linkUrl}</a>
-        </p>
-      )
-    }else{
-      return(
-        <div className="article-content" dangerouslySetInnerHTML={this.props.setHtml()}></div>
-      )
-    }
-  }
-} 
-
-@observer
-class SourceShare extends React.Component{
-  constructor(props){
-    super(props);
-    this.state = {
-      resource: [],
-      comments: [],
-      commentsOwnerNames: [],
-      urlPublishTime: 0,
-      commentLength: 0,
-      inputValidationState: null,
-      inputPlaceholder: "写下你的评论..",
+    render(){
+      if(sourceType !== "article"){
+        return(
+          <p>
+            <a href={this.props.linkUrl} target="blank">{this.props.linkUrl}</a>
+          </p>
+        )
+      }else{
+        return(
+          <div className="article-content" dangerouslySetInnerHTML={this.props.setHtml()}></div>
+        )
+      }
     }
   }
 
-  componentWillMount(){
-    this.getContent();
-  }
+  @observer
+  class SourceShare extends React.Component{
+    constructor(props){
+      super(props);
+      this.state = {
+        resource: [],
+        comments: [],
+        commentsOwnerNames: [],
+        urlPublishTime: 0,
+        commentLength: 0,
+        inputValidationState: null,
+        inputPlaceholder: "写下你的评论..",
+      }
+    }
 
-  getContent = () => {
-    var commentUrl = "";
+    componentWillMount(){
+      this.getContent();
+    }
 
-    if(this.context.location.pathname.slice(1,8) !== "article"){
-      commentUrl = "urlcomment";
+    getContent = () => {
+    var commentUrl = sourceType === "article" ? "articlecomment" : "urlcomment";
+
+    if(sourceType !== "article"){
       ajax.get(`${baseUrl}/urlpublish/${this.props.params.id}`)
       .end((error, response) => {
         if(!error && response){
@@ -69,7 +69,6 @@ class SourceShare extends React.Component{
         }
       })
     }else{
-      commentUrl = "articlecomment";
       ajax.get(`${baseUrl}/articlelist/${this.props.params.id}`)
       .end((error, response) => {
         if(!error && response){
@@ -91,7 +90,7 @@ class SourceShare extends React.Component{
           if(!error && response){
             const users = response.body.results;
             var comments = [];
-            if(this.context.location.pathname.slice(1,8) !== "article"){
+            if(sourceType !== "article"){
               comments = rawComments.map(comment => ({
                 ...comment,
                 ownername: users.find(user => user.id === comment.username).username
@@ -115,15 +114,15 @@ class SourceShare extends React.Component{
     if(!LoginState.completed){
       browserHistory.push('login');
       return;
-    }else{
-      if(!ReactDOM.findDOMNode(this.refs.commentValue).value.trim()){
+     }else{
+       if(!ReactDOM.findDOMNode(this.refs.commentValue).value.trim()){
         this.errorRemminder();
-      }else{
-        const content = {
+       }else{
+          const content = {
           content: ReactDOM.findDOMNode(this.refs.commentValue).value.trim()
         }
-
-        ajax.post(`${baseUrl}/urlcomment/?comment1=${this.props.params.id}`)
+      const commentUrl = sourceType === "article" ? "articlecomment" : "urlcomment";  
+      ajax.post(`${baseUrl}/${commentUrl}/?comment1=${this.props.params.id}`)
         .send(content)
         .set({'Authorization': `Token ${LoginState.token}`})
         .end((error, response) => {
@@ -155,7 +154,7 @@ class SourceShare extends React.Component{
     var title = "";
     var urlmessage;
     var content;
-    if(this.context.location.pathname.slice(1,8) !== "article"){
+    if(sourceType !== "article"){
         userId = this.state.resource.username;
         owner = this.state.resource.owner;
         publishTime = this.state.urlPublishTime;
@@ -182,7 +181,7 @@ class SourceShare extends React.Component{
             <p className="content-title">
               {title}
             </p>
-            <Content currentPathName={this.context.location.pathname.slice(1,8)} setHtml={content} linkUrl={urlmessage} />
+            <Content setHtml={content} linkUrl={urlmessage} />
           </div>
         </div>
         <div className="comment-source">
@@ -219,8 +218,12 @@ class SourceShare extends React.Component{
   }
 }
 
-SourceShare.contextTypes = {
-  location: React.PropTypes.object
+return SourceShare;
 }
 
-export default SourceShare;
+
+
+
+  
+
+  

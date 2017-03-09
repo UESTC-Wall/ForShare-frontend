@@ -38,7 +38,7 @@ class Login extends React.Component{
           this.errorReminder();
         } else {
           LoginState.login(response.body.username, response.body.token);
-          browserHistory.push('/sourcelist');
+          browserHistory.push('/linksourcelist');
           ajax.get(`${baseUrl}/users/`)
           .end((error, response) => {
             if (!error && response){

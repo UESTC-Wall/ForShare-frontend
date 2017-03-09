@@ -30,7 +30,6 @@ class Editor extends React.Component{
         'code',     
         'table',
         'link',
-        'image',
         'hr',     
         'outdent',
         'alignment',

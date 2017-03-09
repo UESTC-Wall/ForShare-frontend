@@ -6,12 +6,33 @@ import { Link } from 'react-router';
 import ReactDOM from 'react-dom';
 import{ observer } from 'mobx-react';
 import { browserHistory } from 'react-router';
+import 'simditor-new/styles/simditor.css';
 
 import { LoginState } from '../store';
 import baseUrl from './config';
 import './SourceShare.css';
 
 bootstrapUtils.addStyle(FormControl, 'custom');
+
+class Content extends React.Component{
+  constructor(props){
+    super(props);
+  }
+
+  render(){
+    if(this.props.currentPathName !== "article"){
+      return(
+        <p>
+          <a href={this.props.linkUrl} target="blank">{this.props.linkUrl}</a>
+        </p>
+      )
+    }else{
+      return(
+        <div className="article-content" dangerouslySetInnerHTML={this.props.setHtml()}></div>
+      )
+    }
+  }
+} 
 
 @observer
 class SourceShare extends React.Component{
@@ -33,29 +54,54 @@ class SourceShare extends React.Component{
   }
 
   getContent = () => {
-    ajax.get(`${baseUrl}/urlpublish/${this.props.params.id}`)
-    .end((error, response) => {
-      if(!error && response){
-        this.setState({ resource : response.body });
-        this.setState({ urlPublishTime : response.body.urlpublish_time.slice(0, 16) });
-        this.setState({ commentLength : response.body.urlcomment_set.length })
-      }else{
-        console.log("resource fetching error!");
-      }
-    })
+    var commentUrl = "";
 
-    ajax.get(`${baseUrl}/urlcomment/?comment1=${this.props.params.id}`)
+    if(this.context.location.pathname.slice(1,8) !== "article"){
+      commentUrl = "urlcomment";
+      ajax.get(`${baseUrl}/urlpublish/${this.props.params.id}`)
+      .end((error, response) => {
+        if(!error && response){
+          this.setState({ resource : response.body });
+          this.setState({ urlPublishTime : response.body.urlpublish_time.slice(0, 16) });
+          this.setState({ commentLength : response.body.urlcomment_set.length })
+        }else{
+          console.log("resource fetching error!");
+        }
+      })
+    }else{
+      commentUrl = "articlecomment";
+      ajax.get(`${baseUrl}/articlelist/${this.props.params.id}`)
+      .end((error, response) => {
+        if(!error && response){
+          this.setState({ resource : response.body });
+          this.setState({ urlPublishTime : response.body.publish_time.slice(0, 16) });
+          this.setState({ commentLength : response.body.articlecomment_set.length })
+        }else{
+          console.log("resource fetching error!");
+        }
+      })
+    }
+
+    ajax.get(`${baseUrl}/${commentUrl}/?comment1=${this.props.params.id}`)
     .end((error, response) => {
       if(!error && response){
         const rawComments = response.body.results;
         ajax.get(`${baseUrl}/users/`)
         .end((error, response) => {
           if(!error && response){
-            const users = response.body.results
-            const comments = rawComments.map(comment => ({
-              ...comment,
-              ownername: users.find(user => user.id === comment.username).username
-            }))
+            const users = response.body.results;
+            var comments = [];
+            if(this.context.location.pathname.slice(1,8) !== "article"){
+              comments = rawComments.map(comment => ({
+                ...comment,
+                ownername: users.find(user => user.id === comment.username).username
+              }))
+            }else{
+              comments = rawComments.map(comment => ({
+                ...comment,
+                ownername: users.find(user => user.id === comment.usernameid).username
+              }))
+            }
             this.setState({ comments });
           }
         })
@@ -103,21 +149,40 @@ class SourceShare extends React.Component{
   }
 
   render(){
+    var userId = 0;
+    var owner = "";
+    var publishTime = "";
+    var title = "";
+    var urlmessage;
+    var content;
+    if(this.context.location.pathname.slice(1,8) !== "article"){
+        userId = this.state.resource.username;
+        owner = this.state.resource.owner;
+        publishTime = this.state.urlPublishTime;
+        title = this.state.resource.urlintroduce;
+        content = () => null;
+        urlmessage = this.state.resource.urlmessage;
+      }else{
+        userId = this.state.resource.usernameid;
+        owner = this.state.resource.article_owner;
+        publishTime = this.state.urlPublishTime;
+        title = this.state.resource.article_abstract;
+        content = () => ({__html:this.state.resource.article});
+        urlmessage = null;
+      }
     return(
       <div className="source-share">
         <div className="source">
           <div className="source-title">
             <b>发布于</b>
-            <b className="b-username"><Link to={`/user/${this.state.resource.username}`}>{this.state.resource.owner}</Link></b>
-            <b className="b-publishtime">{this.state.urlPublishTime}</b>     
+            <b className="b-username"><Link to={`/user/${userId}`}>{owner}</Link></b>
+            <b className="b-publishtime">{publishTime}</b>     
           </div>
           <div className="source-content">
-            <p>
-              {this.state.resource.urlintroduce}
+            <p className="content-title">
+              {title}
             </p>
-            <p>
-              <a href={this.state.resource.urlmessage} target="blank">{this.state.resource.urlmessage}</a>
-            </p>
+            <Content currentPathName={this.context.location.pathname.slice(1,8)} setHtml={content} linkUrl={urlmessage} />
           </div>
         </div>
         <div className="comment-source">
@@ -152,6 +217,10 @@ class SourceShare extends React.Component{
       </div>  
     )
   }
+}
+
+SourceShare.contextTypes = {
+  location: React.PropTypes.object
 }
 
 export default SourceShare;

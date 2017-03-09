@@ -34,6 +34,10 @@
   width: 100%;
   border-radius: 4px;
 }
+.source-share .source-content .content-title{
+  font-size: 30px;
+  font-weight: bold;
+}
 .source-share .comment-source{
   background-color: #fff;
   padding: 2em;

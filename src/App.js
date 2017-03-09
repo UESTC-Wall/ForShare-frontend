@@ -1,8 +1,12 @@
 import React from 'react';
-import { Navbar, Nav, NavItem } from 'react-bootstrap';
+import { Navbar, Nav, NavDropdown, NavItem, MenuItem } from 'react-bootstrap';
 import { bootstrapUtils } from 'react-bootstrap/lib/utils';
 import { LinkContainer } from 'react-router-bootstrap';
+<<<<<<< HEAD
 import { Link } from 'react-router';
+=======
+import { observer } from 'mobx-react';
+>>>>>>> refs/remotes/UESTC-Wall/master
 
 import LoginStatusUI from './components/LoginStatusUI';
 import './App.css';
@@ -42,12 +46,17 @@ class Footer extends React.Component{
   }
 }
 
+@observer
 class App extends React.Component {
 
   getChildContext = () => {
     return {
       location: this.props.location
     }
+  }
+
+  refresh = () => {
+    window.location.reload();
   }
 
   render() {
@@ -60,13 +69,18 @@ class App extends React.Component {
             </Navbar.Brand>
           </Navbar.Header>
           <Nav>
-            <LinkContainer to="/sourcelist" activeHref="active">
-              <NavItem>资源分享</NavItem>
-            </LinkContainer>
-            <LinkContainer to="/newlink" activeHref="active">
+            <NavDropdown title={"资源分享"} id="basic-nav-dropdown">
+              <LinkContainer to="/article">
+                <MenuItem eventKey={1} onClick={this.refresh}>原创文章</MenuItem>
+              </LinkContainer>
+              <LinkContainer to="/link">
+                <MenuItem eventKey={2} onClick={this.refresh}>链接分享</MenuItem>
+              </LinkContainer>
+            </NavDropdown>
+            <LinkContainer to="newlink" activeHref="active">
               <NavItem>上传链接</NavItem>
             </LinkContainer>
-            <LinkContainer to="/newarticle" activeHref="active">
+            <LinkContainer to="newarticle" activeHref="active">
               <NavItem>写文章</NavItem>
             </LinkContainer>
           </Nav>

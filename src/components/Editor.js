@@ -6,7 +6,8 @@ class Editor extends React.Component{
 
   componentDidMount(){
     this.editor = new Simditor({
-      textarea:('#editor'),
+      textarea: ('#editor'),
+      pasteImage: true,
       upload:{
         url: '',
         type: 'photo'

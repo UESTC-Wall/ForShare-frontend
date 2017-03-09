@@ -13,8 +13,10 @@ import Suggestion from './pages/Suggestion';
 const routes = (
   <Route path="/" component={App}>
     <IndexRoute component={SourceShareList} />
-    <Route path="sourcelist" component={SourceShareList} />
-    <Route path="source/:id" component={SourceShare} />
+    <Route path="link" component={SourceShareList} />
+    <Route path="article" component={SourceShareList} />
+    <Route path="articlesource/:id" component={SourceShare} />
+    <Route path="linksource/:id" component={SourceShare} />
     <Route path="newlink" component={WriteSourceLink} />
     <Route path="newarticle" component={WriteArticle} />
     <Route path="login" component={Login} />

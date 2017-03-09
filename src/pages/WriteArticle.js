@@ -36,12 +36,29 @@ class WriteArticle extends React.Component{
       alert("请先登录");
     }
     
-    const titleValue = ReactDOM.findDOMNode(this.refs.titleValue).value.trim();
-    const articleValue = this.refs.editor.getValue().trim();
-
-    if(!titleValue || !articleValue){
-      this.setState({ ValidationState: "error" , Placeholde: "标题与内容不能为空"});
+    const articleContent = {
+      article_abstract: ReactDOM.findDOMNode(this.refs.titleValue).value.trim(),
+      article: this.refs.editor.getValue().trim()
     }
+
+    if(!articleContent.article_abstract || !articleContent.article){
+      this.setState({ ValidationState: "error" , Placeholde: "标题与内容不能为空"});
+      alert(articleContent.article);
+      return;
+    }
+
+    ajax.post(`${baseUrl}/articlepublish/`)
+      .send(articleContent)
+      .set({'Authorization': `Token ${LoginState.token}`})
+      .end((error, response) => {
+        if (error || response.status !== 201) {
+          console.log('source push error!');
+          alert("发布失败，请稍后再试");
+        } else {
+          console.log('yay got ' + JSON.stringify(response.body));
+          alert("发布成功");
+        }
+      });
   }
 
   render(){

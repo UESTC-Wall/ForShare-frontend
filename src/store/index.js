@@ -1,6 +1,6 @@
 import { create } from "mobx-persist";
-import LoginStateStore from "./LoginStateStore"
+import LoginStateStore from "./LoginStateStore";
 
-const persistStore = create()
+const persistStore = create();
 
-export const LoginState = persistStore('login', new LoginStateStore())
+export const LoginState = persistStore('login', new LoginStateStore());

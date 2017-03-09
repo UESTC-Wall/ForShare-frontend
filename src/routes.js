@@ -8,7 +8,6 @@ import WriteSourceLink from './pages/WriteSourceLink';
 import WriteArticle from './pages/WriteArticle';
 import Login from './pages/Login';
 import UserInterface from './pages/UserInterface';
-import Suggestion from './pages/Suggestion';
 
 const routes = (
   <Route path="/" component={App}>
@@ -21,7 +20,6 @@ const routes = (
     <Route path="newarticle" component={WriteArticle} />
     <Route path="login" component={Login} />
     <Route path="user/:id" component={UserInterface} />
-    <Route path="suggestion" component={Suggestion} />
   </Route> 
 );
 

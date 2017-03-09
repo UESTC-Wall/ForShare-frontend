@@ -43,18 +43,9 @@ loadSourceFromServer = () => {
     this.loadSourceFromServer();
   }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-  handleUrlreadcountChange(id, count) {
-=======
- handleUrlreadcountChange(id, count) {
->>>>>>> refs/remotes/origin/master
-    ajax.patch(`${baseUrl}/urlpublish/${id}/`)        
-=======
   handleUrlreadcountChange(id, count) {
     if(this.context.location.pathname.slice(1,8) !== "article"){
       ajax.patch(`${baseUrl}/urlpublish/${id}/`)        
->>>>>>> refs/remotes/UESTC-Wall/master
         .send({urlreadcount:++count})
         .end((error, response) => {
           if(!error && response) {

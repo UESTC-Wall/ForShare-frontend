@@ -2,11 +2,7 @@ import React from 'react';
 import { Navbar, Nav, NavDropdown, NavItem, MenuItem } from 'react-bootstrap';
 import { bootstrapUtils } from 'react-bootstrap/lib/utils';
 import { LinkContainer } from 'react-router-bootstrap';
-<<<<<<< HEAD
-import { Link } from 'react-router';
-=======
 import { observer } from 'mobx-react';
->>>>>>> refs/remotes/UESTC-Wall/master
 
 import LoginStatusUI from './components/LoginStatusUI';
 import './App.css';
@@ -36,11 +32,7 @@ class Footer extends React.Component{
       return null;
     }else{
       return(
-          <footer>
-            <Link to="/suggestion">
-              期待你的建议...
-            </Link>
-          </footer>
+        <footer>ForShare</footer>
       )
     }
   }
@@ -65,7 +57,7 @@ class App extends React.Component {
         <Navbar bsStyle="custom">
           <Navbar.Header>
             <Navbar.Brand>
-              <a href="#" className="brand">ForShare</a>
+              <a href="#">ForShare</a>
             </Navbar.Brand>
           </Navbar.Header>
           <Nav>

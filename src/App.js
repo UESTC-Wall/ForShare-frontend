@@ -47,10 +47,6 @@ class App extends React.Component {
     }
   }
 
-  refresh = () => {
-    window.location.reload();
-  }
-
   render() {
     return (
       <div className="header">
@@ -62,11 +58,11 @@ class App extends React.Component {
           </Navbar.Header>
           <Nav>
             <NavDropdown title={"资源分享"} id="basic-nav-dropdown">
-              <LinkContainer to="/article">
-                <MenuItem eventKey={1} onClick={this.refresh}>原创文章</MenuItem>
+              <LinkContainer to="/articlesourcelist">
+                <MenuItem eventKey={1}>原创文章</MenuItem>
               </LinkContainer>
-              <LinkContainer to="/link">
-                <MenuItem eventKey={2} onClick={this.refresh}>链接分享</MenuItem>
+              <LinkContainer to="/linksourcelist">
+                <MenuItem eventKey={2}>链接分享</MenuItem>
               </LinkContainer>
             </NavDropdown>
             <LinkContainer to="newlink" activeHref="active">

@@ -8,7 +8,9 @@ import { Link } from 'react-router';
 import './SourceShareList.css';
 import baseUrl from './config';
 
-class SourceShareList extends React.Component{
+export default function createSourceShareList (sourceType){
+  const sourceListUrl = sourceType === "article" ? "articlelist" : "urlpublish";
+  class SourceShareList extends React.Component{
   constructor(props){
     super(props);
 
@@ -21,12 +23,6 @@ class SourceShareList extends React.Component{
   }
 
 loadSourceFromServer = () => {
-  var sourceListUrl = "";
-  if(this.context.location.pathname.slice(1,8) !== "article"){
-    sourceListUrl = "urlpublish";
-  }else{
-    sourceListUrl = "articlelist";
-  }
   ajax.get(`${baseUrl}/${sourceListUrl}/`)
   .query({ limit: this.state.perPage, offset: this.state.offset })
   .end((error, response) => {
@@ -44,7 +40,7 @@ loadSourceFromServer = () => {
   }
 
   handleUrlreadcountChange(id, count) {
-    if(this.context.location.pathname.slice(1,8) !== "article"){
+    if(sourceType !== "article"){
       ajax.patch(`${baseUrl}/urlpublish/${id}/`)        
         .send({urlreadcount:++count})
         .end((error, response) => {
@@ -65,7 +61,6 @@ loadSourceFromServer = () => {
           }
         })
     }
-    
   } 
 
   handlePageClick = (data) => {
@@ -93,9 +88,8 @@ loadSourceFromServer = () => {
               var urlPubulishTime = "";
               var urlReadCount = 0;
               var commentLength = 0;
-              var currentLocation = "";
               
-              if(this.context.location.pathname.slice(1,8) === "article"){
+              if(sourceType === "article"){
                 id = source.id;
                 userName = source.article_owner;
                 userId = source.usernameid;
@@ -103,7 +97,6 @@ loadSourceFromServer = () => {
                 urlPubulishTime = source.publish_time.slice(0, 16);
                 urlReadCount = source.article_readcount;
                 commentLength = source.articlecomment_set.length;
-                currentLocation = this.context.location.pathname.slice(1,8) + "source";
               }else{
                 id = source.id;
                 userName = source.owner;
@@ -112,7 +105,6 @@ loadSourceFromServer = () => {
                 urlPubulishTime = source.urlpublish_time.slice(0, 16);
                 urlReadCount = source.urlreadcount;
                 commentLength = source.urlcomment_set.length;
-                currentLocation = this.context.location.pathname.slice(1,5) + "source";
               }
 
               return (
@@ -125,7 +117,7 @@ loadSourceFromServer = () => {
                       评论量：{commentLength}
                     </p>
                     <p>{urlIntroduce}</p>
-                    <LinkContainer to={`/${currentLocation}/${id}`}>
+                    <LinkContainer to={`/${sourceType}/${id}`}>
                       <NavItem>                           {/* 防止<Button> 被自动转换成<a>导致样式混乱 */}
                         <Button bsStyle="danger" onClick={ this.handleUrlreadcountChange.bind(this, id, urlReadCount) }>了解详情</Button>
                       </NavItem>
@@ -153,8 +145,5 @@ loadSourceFromServer = () => {
   }
 }
 
-SourceShareList.contextTypes = {
-  location: React.PropTypes.object
+return SourceShareList;
 }
-
-export default SourceShareList;

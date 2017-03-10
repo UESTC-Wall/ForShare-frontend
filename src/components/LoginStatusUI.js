@@ -14,7 +14,7 @@ class LoginStatusUI extends React.Component{
 
     let currentLocation = this.context.location.pathname.slice(0,4);
     if(currentLocation === 'user'){
-      browserHistory.push('/sourcelist');
+      browserHistory.push('/linksourcelist');
     }
     
   }

@@ -124,9 +124,7 @@ class App extends React.Component {
               <LinkContainer to="newarticle" activeHref="active">
                 <NavItem>写文章</NavItem>
               </LinkContainer>
-              <LinkContainer to="suggestion" activeHref="active" onClick={() => this.setState({ showModal: true})}>  
-                <NavItem>意见反馈</NavItem>
-              </LinkContainer>
+                <NavItem onClick={() => this.setState({ showModal: true})}>意见反馈</NavItem>
             </Nav>
             <Nav pullRight>
               <LoginStatusUI></LoginStatusUI>

@@ -1,8 +1,12 @@
 import React from 'react';
 import ajax from 'superagent';
+import { Button, MenuItem, DropdownButton } from 'react-bootstrap';
+import { bootstrapUtils } from 'react-bootstrap/lib/utils';
 
 import baseUrl from './config';
 import './UserInterface.css';
+
+bootstrapUtils.addStyle(Button, 'Link');
 
 class UserInterface extends React.Component{
 
@@ -26,6 +30,10 @@ class UserInterface extends React.Component{
     })
   }
 
+ shareDelete() {
+   ajax.delete()
+ }
+
   render(){
     return (
       <div className="user">
@@ -34,14 +42,19 @@ class UserInterface extends React.Component{
           <p>班级：<b>{this.state.userInformation.user_class}</b></p>
         </div>
         <div className="user-publish">
-          <p className="publish-div-title">发布过{this.state.userPublish.length}条内容</p>
+          <div className="publish-div-title">发布过{this.state.userPublish.length}条内容</div>
           {
             this.state.userPublish.map((urlpublish, index) => {
               const publishTime = urlpublish.slice(7, 23);
               const publishContent = urlpublish.slice(33);
               return(
                 <div className="publish" key={index}>
-                  <p>{publishTime}</p>
+                  <div>
+                    <b className="user-time">{publishTime}</b>
+                    <DropdownButton title="" className="user-delete">
+                      <MenuItem eventKey="1" onClick={this.sourceDelete.bind(this, publishTime, publishContent)}>删除</MenuItem>
+                    </DropdownButton>
+                  </div>
                   <p>{publishContent}</p>
                 </div>
               )

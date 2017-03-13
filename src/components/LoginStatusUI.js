@@ -22,9 +22,14 @@ class LoginStatusUI extends React.Component{
   render(){
     if(!LoginState.completed){
       return (
-        <LinkContainer to="login" activeHref="active">
-          <NavItem>登陆</NavItem>
-        </LinkContainer>
+        <div>
+          <LinkContainer to="login" activeHref="active">
+            <NavItem>登陆</NavItem>
+          </LinkContainer>
+          <LinkContainer to="usercreate" activeHref="active">
+            <NavItem>注册</NavItem>
+          </LinkContainer>
+        </div>
       )
     }else{
       return(

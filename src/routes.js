@@ -8,6 +8,7 @@ import WriteSourceLink from './pages/WriteSourceLink';
 import WriteArticle from './pages/WriteArticle';
 import Login from './pages/Login';
 import UserInterface from './pages/UserInterface';
+import UserCreate from './pages/UserInterface';
 
 const SourceShareList = createSourceShareList("defaultlist");
 
@@ -21,6 +22,7 @@ const routes = (
     <Route path="newlink" component={WriteSourceLink} />
     <Route path="newarticle" component={WriteArticle} />
     <Route path="login" component={Login} />
+    <Route path="usercreate" component={UserCreate} />
     <Route path="user/:id" component={UserInterface} />
   </Route> 
 );

@@ -30,8 +30,17 @@ class UserInterface extends React.Component{
     })
   }
 
- shareDelete() {
-   ajax.delete()
+ sourceDelete = (publishTime) => {
+   ajax.delete(`${baseUrl}/users/${this.props.params.id}`)
+       .end((error, response) => {
+         if(!error && response) {
+           let publishTime = '';
+           this.setState({ userInformation : response.body });
+           console.log("success");
+         } else {
+           console.log("fail");
+         }
+       })
  }
 
   render(){
@@ -52,7 +61,7 @@ class UserInterface extends React.Component{
                   <div>
                     <b className="user-time">{publishTime}</b>
                     <DropdownButton title="" className="user-delete">
-                      <MenuItem eventKey="1" onClick={this.sourceDelete.bind(this, publishTime, publishContent)}>删除</MenuItem>
+                      <MenuItem eventKey="1" onClick={this.sourceDelete.bind(this, publishTime)}>删除</MenuItem>
                     </DropdownButton>
                   </div>
                   <p>{publishContent}</p>

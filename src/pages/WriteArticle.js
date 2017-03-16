@@ -26,10 +26,6 @@ class WriteArticle extends React.Component{
     }
   }
 
-  componentDidMount(){
-    
-  }
-
   publish = () => {
     if(!LoginState.completed){
       browserHistory.push('/login');
@@ -57,6 +53,8 @@ class WriteArticle extends React.Component{
         } else {
           console.log('yay got ' + JSON.stringify(response.body));
           alert("发布成功");
+          this.refs.editor.setValue("");
+          ReactDOM.findDOMNode(this.refs.titleValue).value = "";
         }
       });
   }

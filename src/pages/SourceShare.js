@@ -175,7 +175,8 @@ export default function createSource(sourceType){
           <div className="source-title">
             <b>发布于</b>
             <b className="b-username"><Link to={`/user/${userId}`}>{owner}</Link></b>
-            <b className="b-publishtime">{publishTime}</b>     
+            <b className="b-publishtime">{publishTime}</b> 
+            <Button bsStyle="default" onClick={browserHistory.goBack}>返回</Button>    
           </div>
           <div className="source-content">
             <p className="content-title">

@@ -38,7 +38,6 @@ class Editor extends React.Component{
 
     if(this.props.content !== undefined){
       this.editor.setValue(this.props.content);
-      alert(this.props.content);
     }
   }
 

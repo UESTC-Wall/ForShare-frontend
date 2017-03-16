@@ -17,6 +17,10 @@
 .source .source-title{
   margin-top: -1em;
 }
+.source .source-title button{
+  margin-left: 69.5%;
+  border: none;
+}
 .source b{
   margin-right: 1em;
 }

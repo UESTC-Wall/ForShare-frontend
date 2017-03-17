@@ -24,7 +24,9 @@ class Login extends React.Component{
     }
   }
   
-  pushUserMessage = () => {
+  pushUserMessage = (event) => {
+    event.preventDefault();
+    
     const content = {
       username: ReactDOM.findDOMNode(this.refs.userName).value,
       password: ReactDOM.findDOMNode(this.refs.passWord).value
@@ -71,7 +73,7 @@ class Login extends React.Component{
     return(
       <div className="login">
         <h3>登录</h3>
-        <form>
+        <form onSubmit={this.pushUserMessage}>
           <FormGroup validationState={this.state.validationState}>
             <InputGroup bsStyle="custom">
               <InputGroup.Addon bsStyle="custom-user"></InputGroup.Addon>
@@ -84,8 +86,8 @@ class Login extends React.Component{
               <FormControl type="password" ref="passWord" />
             </InputGroup>
           </FormGroup>
+          <Button bsStyle="danger" type="submit">登录</Button>
         </form>
-        <Button bsStyle="danger" onClick={this.pushUserMessage}>登录</Button>
         <p className="error-reminder" ref="errorReminder"></p>
       </div>
     );

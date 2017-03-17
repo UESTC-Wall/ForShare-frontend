@@ -2,20 +2,22 @@ import React from 'react';
 import Simditor from 'simditor-new';
 import 'simditor-new/styles/simditor.css';
 
+import { LoginState } from '../store';
+import baseUrl from '../pages/config';
+
 class Editor extends React.Component{
 
   componentDidMount(){
     this.editor = new Simditor({
       textarea: ('#editor'),
-      pasteImage: true,
       upload:{
-        url: '',
-        type: 'photo'
+        url: `${baseUrl}/articlepublish`,
+        type: 'photo',
+        params: {'Authorization': `Token ${LoginState.token}`},
+        fileKey: 'upload_file',
+        connectionCount: 3,
+        leaveConfirm: 'Uploading is in progress, are you sure to leave this page?',
       },
-      params: null,
-      fileKey: 'upload_file',
-      connectionCount: 3,
-      leaveConfirm: 'Uploading is in progress, are you sure to leave this page?',
       toolbar: [
         'title',
         'bold',
@@ -29,6 +31,7 @@ class Editor extends React.Component{
         'blockquote',
         'code',     
         'table',
+        'image',
         'link',
         'hr',     
         'outdent',

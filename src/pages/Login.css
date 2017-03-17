@@ -41,7 +41,7 @@
 }
 .login button{
   margin-top: 1em;
-  width: 76%;
+  width: 100%;
 }
 .login .error-reminder{
   color: red;

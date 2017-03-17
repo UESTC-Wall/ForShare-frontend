@@ -123,10 +123,10 @@ class App extends React.Component {
                   <MenuItem eventKey={2}>链接分享</MenuItem>
                 </LinkContainer>
               </NavDropdown>
-              <LinkContainer to="newlink" activeHref="active">
+              <LinkContainer to="/newlink" activeHref="active">
                 <NavItem>上传链接</NavItem>
               </LinkContainer>
-              <LinkContainer to="newarticle" activeHref="active">
+              <LinkContainer to="/newarticle" activeHref="active">
                 <NavItem>写文章</NavItem>
               </LinkContainer>
               <NavItem onClick={this.showTheModal}>意见反馈</NavItem>

@@ -51,7 +51,6 @@ class WriteArticle extends React.Component{
           console.log('source push error!');
           alert("发布失败，请稍后再试");
         } else {
-          console.log('yay got ' + JSON.stringify(response.body));
           alert("发布成功");
           this.refs.editor.setValue("");
           ReactDOM.findDOMNode(this.refs.titleValue).value = "";

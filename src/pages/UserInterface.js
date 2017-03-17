@@ -1,5 +1,7 @@
 import React from 'react';
 import ajax from 'superagent';
+import { Button } from 'react-bootstrap';
+import { Link } from 'react-router';
 
 import baseUrl from './config';
 import './UserInterface.css';
@@ -32,17 +34,18 @@ class UserInterface extends React.Component{
         <div className="user-information">
           <p className="user-name">{this.state.userInformation.username}</p>
           <p>班级：<b>{this.state.userInformation.user_class}</b></p>
+          <p>E-mail：<b>{this.state.userInformation.user_email}</b></p>
         </div>
         <div className="user-publish">
           <p className="publish-div-title">发布过{this.state.userPublish.length}条内容</p>
           {
             this.state.userPublish.map((urlpublish, index) => {
-              const publishTime = urlpublish.slice(7, 23);
-              const publishContent = urlpublish.slice(33);
+              const publishContent = urlpublish.slice(7);
+              const urlKey = urlpublish.split(":")[1];
               return(
                 <div className="publish" key={index}>
-                  <p>{publishTime}</p>
-                  <p>{publishContent}</p>
+                  <span>{publishContent}</span>
+                  <Button bsStyle="default"><Link to={`/link/${urlKey}`}>查看</Link></Button>
                 </div>
               )
             })  

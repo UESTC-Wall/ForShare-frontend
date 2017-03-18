@@ -12,6 +12,7 @@ class UserCreate extends React.Component {
 
         this.state = {
             validationState: null,
+            validationState2: null,
             namePlaceholder: "用户名",
             passwordPlaceholder: "输入密码",
             emailPlaceholder: "输入你的邮箱",
@@ -23,17 +24,23 @@ class UserCreate extends React.Component {
         const content = {
             username: ReactDOM.findDOMNode(this.refs.userName).value,
             password: ReactDOM.findDOMNode(this.refs.passWord).value,
-            useremail: ReactDOM.findDOMNode(this.refs.userEmail).value,
-            userclass: ReactDOM.findDOMNode(this.refs.userClass).value
+            user_email: ReactDOM.findDOMNode(this.refs.userEmail).value,
+            user_class: ReactDOM.findDOMNode(this.refs.userClass).value
         }
 
         ajax.post(`${baseUrl}/usercreate/`)
             .send(content)
             .end((error, response) => {
                 if(!error && response) {
-                    alert('suceese!');
+                    let regex = /[0-9a-zA-Z\@\.\+\-\_]{0,30}/;
+                    let re = regex.test(ReactDOM.findDOMNode(this.refs.userName).value);
+                    if(!re) {
+                        this.errorReminder();
+                    } else {
+                        alert("注册成功！");
+                    }
                 } else {
-                    alert('fail!');
+                    this.errorReminder();
                 }
             })
     }
@@ -47,9 +54,14 @@ class UserCreate extends React.Component {
         ReactDOM.findDOMNode(this.refs.passWord).value.trim() === "" ||
         ReactDOM.findDOMNode(this.refs.userEmail).value.trim() === "" ||
         ReactDOM.findDOMNode(this.refs.userClass).value.trim() === "") {
-            setErrorContent("请输入完整的用户信息！");
+            setErrorContent("请填写完整的用户信息！");
+            this.setState({ validationState2 : "error" });
+        } else if(ReactDOM.findDOMNode(this.refs.userName).value === 
+        ReactDOM.findDOMNode(this.refs.passWord).value){
+            setErrorContent("用户名和密码不能相同！");
+            this.setState({ validationState : "error" });
         } else {
-            setErrorContent("请按要求填写用户名！");
+            setErrorContent("用户名只能由字母、数字和字符@.+-_组成");
             this.setState({ validationState : "error" });
         }
     }
@@ -59,14 +71,16 @@ class UserCreate extends React.Component {
             <div className="usercreate">
                 <h3>注 册</h3>
                 <form>
-                    <FormGroup validationState={this.state.validationState}>
+                    <FormGroup validationState={this.state.validationState} 
+                               validationState={this.state.validationState2}>
                         <InputGroup bsStyle="custom">
                             <InputGroup.Addon >
-                                <Glyphicon glyph="user" /></InputGroup.Addon>
+                                <Glyphicon glyph="user" />
+                            </InputGroup.Addon>
                             <FormControl type="text" ref="userName" placeholder={this.state.namePlaceholder}/>
                         </InputGroup>
                     </FormGroup>
-                    <FormGroup>
+                    <FormGroup validationState={this.state.validationState2}>
                         <InputGroup bsStyle="custom">
                             <InputGroup.Addon>
                                 <Glyphicon glyph="lock" />
@@ -74,7 +88,7 @@ class UserCreate extends React.Component {
                             <FormControl type="password" ref="passWord" placeholder={this.state.passwordPlaceholder}/>
                         </InputGroup>
                     </FormGroup>
-                    <FormGroup>
+                    <FormGroup validationState={this.state.validationState2}>
                         <InputGroup bsStyle="custom">
                             <InputGroup.Addon>
                                 <Glyphicon glyph="envelope" />
@@ -82,7 +96,7 @@ class UserCreate extends React.Component {
                             <FormControl type="text" ref="userEmail" placeholder={this.state.emailPlaceholder}/>
                         </InputGroup>
                     </FormGroup>
-                    <FormGroup>
+                    <FormGroup validationState={this.state.validationState2}>
                         <InputGroup bsStyle="custom">
                             <InputGroup.Addon>
                                 <Glyphicon glyph="book" />

@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { FormGroup, InputGroup, FormControl, Button } from 'react-bootstrap';
+import { FormGroup, InputGroup, FormControl, Button, Glyphicon } from 'react-bootstrap';
 import { bootstrapUtils } from 'react-bootstrap/lib/utils';
 import ajax from 'superagent';
 import { browserHistory } from 'react-router';
@@ -74,13 +74,17 @@ class Login extends React.Component{
         <form>
           <FormGroup validationState={this.state.validationState}>
             <InputGroup bsStyle="custom">
-              <InputGroup.Addon bsStyle="custom-user"></InputGroup.Addon>
+              <InputGroup.Addon >
+                <Glyphicon glyph="user" />
+              </InputGroup.Addon>
               <FormControl type="text" ref="userName" />
             </InputGroup>
           </FormGroup>
           <FormGroup validationState={this.state.validationState}>
             <InputGroup bsStyle="custom">
-              <InputGroup.Addon bsStyle="custom-password"></InputGroup.Addon>
+              <InputGroup.Addon >
+                <Glyphicon glyph="lock" />
+              </InputGroup.Addon>
               <FormControl type="password" ref="passWord" />
             </InputGroup>
           </FormGroup>

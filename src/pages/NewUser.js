@@ -10,16 +10,24 @@ class NewUser extends React.Component{
 
 		this.state = {
 			userName: "",
+			uNValidationState: null,
 			OncePassWord: "",
 			SecondPassWord: "",
 			email: "",
 			class: "",
 			unInputReminder: "不多于30个字符。只能用字母、数字和字符 @/./+/-/_ ",
+			validation: false
 		}
   }
 
 	handleUnChange = (event) => {
 		this.setState({ userName : event.target.value });
+		const regex = /[0-9\a-zA-Z\@\.\+\-\_]/;
+		if(!regex.test(event.target.value)){
+			alert(!regex.test(event.target.value));
+			this.setState({ unInputReminder :  "含非法字符", uNValidationState : "error"});
+		}
+
 	}
 
 	handlePsChange = (event) => {

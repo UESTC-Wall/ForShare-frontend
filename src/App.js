@@ -50,7 +50,7 @@ class App extends React.Component {
     this.state = {
       showModal: false,
       sugPlaceholder: "写下你的建议...",
-      sugValidationState: null
+      sugValidationState: null,
     }
   }
 
@@ -58,7 +58,7 @@ class App extends React.Component {
     const sugMessage = ReactDOM.findDOMNode(this.refs.sugValue).value.trim();
 
     if (!sugMessage) {
-      this.errorReminder();
+      this.sugErrorReminder();
       return;
     }
 
@@ -73,14 +73,13 @@ class App extends React.Component {
           alert("发布失败，请稍后再试");
           this.deleteInputValue();
         } else {
-          console.log('yay got ' + JSON.stringify(response.body));
           alert("发布成功");
           this.deleteInputValue();
         }
       })
   }
 
-  errorReminder() {
+  sugErrorReminder() {
     if (ReactDOM.findDOMNode(this.refs.sugValue).value.trim() === "") {
       this.setState({ sugPlaceholder: "提交内容不能为空..." });
       this.setState({ sugValidationState: "error" });
@@ -101,7 +100,7 @@ class App extends React.Component {
     this.setState({ showModal: true });
   }
 
-  close = () => this.setState({ showModal: false });
+  close = () => this.setState({ showModal : false});
 
   render() {
 
@@ -144,7 +143,6 @@ class App extends React.Component {
           <Modal
             show={this.state.showModal}
             onHide={this.close}
-            dialogClassName="custom-modal"
             >
             <Modal.Header closeButton>
               <Modal.Title>意见反馈</Modal.Title>

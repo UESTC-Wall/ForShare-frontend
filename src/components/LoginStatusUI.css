@@ -1,0 +1,34 @@
+.custom-modal .modal-content{
+  width: 30%;
+  margin: auto;
+	text-align: center;
+}
+.custom-modal .modal-content .modal-header{
+  text-align: center;
+}
+.custom-modal .modal-content .modal-body form{
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.custom-modal .modal-content .modal-body form .input-group-addon-custom-user{
+  background: url("../img/user.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 16%;
+}
+.custom-modal .modal-content .modal-body form .input-group-addon-custom-password{
+  background: url("../img/lock.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 16%;
+}
+.custom-modal .modal-content .modal-body form button{
+  width: 92%;
+}
+.custom-modal .modal-content .modal-body .error-reminder{
+  color: red;
+	margin-top: 0.5em;
+  display: none;
+}

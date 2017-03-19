@@ -6,8 +6,8 @@ import createSourceShareList from './pages/SourceShareList';
 import SourceShare from './pages/SourceShare';
 import WriteSourceLink from './pages/WriteSourceLink';
 import WriteArticle from './pages/WriteArticle';
-import Login from './pages/Login';
 import UserInterface from './pages/UserInterface';
+import NewUser from './pages/NewUser';
 
 const SourceShareList = createSourceShareList("defaultlist");
 
@@ -20,8 +20,8 @@ const routes = (
     <Route path="linksourcelist" component={createSourceShareList("link")} />
     <Route path="newlink" component={WriteSourceLink} />
     <Route path="newarticle" component={WriteArticle} />
-    <Route path="login" component={Login} />
     <Route path="user/:id" component={UserInterface} />
+    <Route path="newuser" component={NewUser} />
   </Route> 
 );
 

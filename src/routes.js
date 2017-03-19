@@ -24,8 +24,7 @@ const routes = (
     <Route path="newarticle" component={WriteArticle} />
     <Route path="login" component={Login} />
     <Route path="user/:id" component={UserInterface} />
-    <Route path="usernew" component={NewUser} />
-    <Route path="usercreate" component={UserCreate} />
+    <Route path="newuser" component={NewUser} />
   </Route> 
 );
 

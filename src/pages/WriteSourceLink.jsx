@@ -22,7 +22,7 @@ class WriteSourceLink extends React.Component {
   }
 
   handleChange = (event) => {
-    this.setState({ urlValue: event.target.value });
+    this.setState({ urlValue: event.target.value.trim() });
   }
 
   publish = () => {
@@ -31,7 +31,7 @@ class WriteSourceLink extends React.Component {
       alert("请先登录");
       return;
     }
-    const urlMessage = this.state.urlValue.trim();
+    const urlMessage = this.state.urlValue;
 
     if (!urlMessage) {
       this.errorReminder();
@@ -62,7 +62,7 @@ class WriteSourceLink extends React.Component {
   }
 
   errorReminder() {
-    if (this.state.urlValue.trim() === "") {
+    if (this.state.urlValue === "") {
       this.setState({ urlValuePlaceholde: "链接不能为空" });
       this.setState({ urlValueValidationState: "error" });
     }

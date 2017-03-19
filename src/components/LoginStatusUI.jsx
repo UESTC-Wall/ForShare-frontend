@@ -35,11 +35,11 @@ class LoginStatusUI extends React.Component {
   }
 
   handleUserNameChange = (event) => {
-    this.setState({ userName: event.target.value });
+    this.setState({ userName: event.target.value.trim() });
   }
 
   handlepassWordChange = (event) => {
-    this.setState({ passWord: event.target.value });
+    this.setState({ passWord: event.target.value.trim() });
   }
 
   pushUserMessage = (event) => {

@@ -22,14 +22,36 @@ class LoginStatusUI extends React.Component{
   render(){
     if(!LoginState.completed){
       return (
-        <div>
-          <LinkContainer to="login" activeHref="active">
-            <NavItem>登陆</NavItem>
-          </LinkContainer>
-          <LinkContainer to="usercreate" activeHref="active">
-            <NavItem>注册</NavItem>
-          </LinkContainer>
-        </div>
+        <NavItem onClick={this.showTheModal}>登陆
+          <Modal
+            show={this.state.showModal}
+            onHide={this.close}
+            dialogClassName="custom-modal"
+            bsSize="lg">
+          <Modal.Header closeButton>
+            <Modal.Title>登录</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <form onSubmit={this.pushUserMessage}>
+              <FormGroup validationState={this.state.validationState}>
+                <InputGroup bsStyle="custom">
+                  <InputGroup.Addon bsStyle="custom-user"></InputGroup.Addon>
+                  <FormControl type="text" ref="userName" />
+                </InputGroup>
+              </FormGroup>
+              <FormGroup validationState={this.state.validationState}>
+                <InputGroup bsStyle="custom">
+                  <InputGroup.Addon bsStyle="custom-password"></InputGroup.Addon>
+                  <FormControl type="password" ref="passWord" />
+                </InputGroup>
+              </FormGroup>
+              <Button bsStyle="danger" type="submit">登录</Button>
+            </form>
+            <p className="error-reminder" ref="errorReminder"></p>
+            <p>没有账号？<Link to={"/newuser"} onClick={this.close}>点击这里注册</Link></p>
+          </Modal.Body>
+        </Modal>
+      </NavItem>
       )
     }else{
       return(

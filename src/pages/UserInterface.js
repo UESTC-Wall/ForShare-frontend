@@ -58,13 +58,8 @@ class UserInterface extends React.Component{
               const publishContent = urlpublish.slice(33);
               return(
                 <div className="publish" key={index}>
-                  <div>
-                    <b className="user-time">{publishTime}</b>
-                    <DropdownButton title="" className="user-delete">
-                      <MenuItem eventKey="1" onClick={this.sourceDelete.bind(this, publishTime)}>删除</MenuItem>
-                    </DropdownButton>
-                  </div>
-                  <p>{publishContent}</p>
+                  <span>{publishContent}</span>
+                  <Button bsStyle="default"><Link to={`/link/${urlKey}`}>查看</Link></Button>
                 </div>
               )
             })  

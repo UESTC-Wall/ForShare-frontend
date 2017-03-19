@@ -6,6 +6,8 @@ import { Link } from 'react-router';
 import baseUrl from './config';
 import './UserInterface.css';
 
+bootstrapUtils.addStyle(Button, 'Link');
+
 class UserInterface extends React.Component{
 
   constructor(props){
@@ -28,6 +30,19 @@ class UserInterface extends React.Component{
     })
   }
 
+ sourceDelete = (publishTime) => {
+   ajax.delete(`${baseUrl}/users/${this.props.params.id}`)
+       .end((error, response) => {
+         if(!error && response) {
+           let publishTime = '';
+           this.setState({ userInformation : response.body });
+           console.log("success");
+         } else {
+           console.log("fail");
+         }
+       })
+ }
+
   render(){
     return (
       <div className="user">
@@ -37,7 +52,7 @@ class UserInterface extends React.Component{
           <p>E-mail：<b>{this.state.userInformation.user_email}</b></p>
         </div>
         <div className="user-publish">
-          <p className="publish-div-title">发布过{this.state.userPublish.length}条内容</p>
+          <div className="publish-div-title">发布过{this.state.userPublish.length}条内容</div>
           {
             this.state.userPublish.map((urlpublish, index) => {
               const publishContent = urlpublish.slice(7);

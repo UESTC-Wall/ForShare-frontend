@@ -9,6 +9,8 @@ import WriteArticle from './pages/WriteArticle';
 import UserInterface from './pages/UserInterface';
 import NewUser from './pages/NewUser';
 
+import UserCreate from './pages/UserCreate';
+
 const SourceShareList = createSourceShareList("defaultlist");
 
 const routes = (

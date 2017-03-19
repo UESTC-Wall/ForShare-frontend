@@ -49,13 +49,14 @@ class UserInterface extends React.Component{
         <div className="user-information">
           <p className="user-name">{this.state.userInformation.username}</p>
           <p>班级：<b>{this.state.userInformation.user_class}</b></p>
+          <p>E-mail：<b>{this.state.userInformation.user_email}</b></p>
         </div>
         <div className="user-publish">
           <div className="publish-div-title">发布过{this.state.userPublish.length}条内容</div>
           {
             this.state.userPublish.map((urlpublish, index) => {
-              const publishTime = urlpublish.slice(7, 23);
-              const publishContent = urlpublish.slice(33);
+              const publishContent = urlpublish.slice(7);
+              const urlKey = urlpublish.split(":")[1];
               return(
                 <div className="publish" key={index}>
                   <span>{publishContent}</span>

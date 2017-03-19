@@ -1,13 +1,27 @@
 import React from 'react';
-import { NavDropdown, NavItem, MenuItem } from 'react-bootstrap';
+import { NavDropdown, NavItem, MenuItem, Modal, FormGroup, InputGroup, Button, FormControl } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import{ observer } from 'mobx-react';
 import { browserHistory } from 'react-router';
+import ReactDOM from 'react-dom';
+import ajax from 'superagent';
+import { Link } from 'react-router';
 
 import { LoginState } from '../store';
+import baseUrl from '../pages/config';
+import './LoginStatusUI.css'; 
 
 @observer
 class LoginStatusUI extends React.Component{
+
+  constructor(props){
+    super(props);
+
+    this.state = {
+      showModal: false,
+      validationState: null
+    }
+  }
 
   logout = () => {
     LoginState.logout();
@@ -16,7 +30,61 @@ class LoginStatusUI extends React.Component{
     if(currentLocation === 'user'){
       browserHistory.push('/linksourcelist');
     }
+    this.setState({ showModal : false });
     
+  }
+
+  pushUserMessage = (event) => {
+    event.preventDefault();
+    
+    const content = {
+      username: ReactDOM.findDOMNode(this.refs.userName).value,
+      password: ReactDOM.findDOMNode(this.refs.passWord).value
+    }
+
+    ajax.post(`${baseUrl}/login/`)
+      .send(content)
+      .end((error, response) => {
+        if (error || response.status !== 200) {
+          console.log('login failed!');
+          this.errorReminder();
+        } else {
+          LoginState.login(response.body.username, response.body.token);
+          browserHistory.push('/linksourcelist');
+          ajax.get(`${baseUrl}/users/`)
+          .end((error, response) => {
+            if (!error && response){
+              LoginState.userid = response.body.results.find(user => user.username === content.username).id;
+            }else{
+              console.log("id fetch error!");
+              alert("登陆失败，请稍后再试");
+              ReactDOM.findDOMNode(this.refs.userName).value = "";
+              ReactDOM.findDOMNode(this.refs.passWord).value = "";
+            }
+          })
+        };
+      });
+  }
+
+  showTheModal = () => {
+    this.setState({ showModal: true });
+  }
+
+  close = () => {
+    this.setState({ showModal : false });
+  }
+
+  errorReminder = () => {
+    let setErrorContent = (value) => {
+      ReactDOM.findDOMNode(this.refs.errorReminder).style.display = "block";
+      ReactDOM.findDOMNode(this.refs.errorReminder).innerHTML = value;
+    }
+    if(ReactDOM.findDOMNode(this.refs.userName).value.trim() === "" || ReactDOM.findDOMNode(this.refs.passWord).value === ""){
+      setErrorContent("请输入用户名和密码！");
+    }else{
+      setErrorContent("用户名或密码错误！");
+      this.setState({ validationState : "error" });
+    }
   }
 
   render(){

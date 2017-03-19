@@ -1,7 +1,7 @@
 import React from 'react';
 import ajax from 'superagent';
-import { Button, MenuItem, DropdownButton } from 'react-bootstrap';
-import { bootstrapUtils } from 'react-bootstrap/lib/utils';
+import { Button } from 'react-bootstrap';
+import { Link } from 'react-router';
 
 import baseUrl from './config';
 import './UserInterface.css';

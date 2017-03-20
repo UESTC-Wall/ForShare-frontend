@@ -53,8 +53,14 @@ class UserCreate extends React.Component {
   }
 
   handlePassWordOnceUnBlur = () => {
+    const regex = /^\d{1,30}$/;
+    const re = regex.test(this.state.passWordOnce);
+
     if (this.state.passWordOnce === this.state.userName) {
       this.setState({ passWordOnceError: "不得与用户名相同！" });
+      this.passWordOnceError();
+    } else if (re) {
+      this.setState({ passWordOnceError: "密码不能是纯数字！" });
       this.passWordOnceError();
     } else if (this.state.passWordOnce.length > 20 || this.state.passWordOnce.length < 6) {
       this.setState({ passWordOnceError: "必须为6-20个字符！" });

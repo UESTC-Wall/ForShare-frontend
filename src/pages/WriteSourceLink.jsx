@@ -2,7 +2,6 @@ import React from 'react';
 import ajax from 'superagent';
 import { FormGroup, FormControl, Button } from 'react-bootstrap';
 import { observer } from 'mobx-react';
-import { browserHistory } from 'react-router';
 
 import baseUrl from './config';
 import { LoginState } from '../store';
@@ -27,7 +26,6 @@ class WriteSourceLink extends React.Component {
 
   publish = () => {
     if (!LoginState.completed) {
-      browserHistory.push('/login');
       alert("请先登录");
       return;
     }

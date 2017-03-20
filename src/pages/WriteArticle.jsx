@@ -3,7 +3,6 @@ import { FormGroup, FormControl, Button } from 'react-bootstrap';
 import { bootstrapUtils } from 'react-bootstrap/lib/utils';
 import ajax from 'superagent';
 import { observer } from 'mobx-react';
-import { browserHistory } from 'react-router';
 
 import baseUrl from './config';
 import { LoginState } from '../store';
@@ -35,7 +34,6 @@ class WriteArticle extends React.Component {
     event.preventDefault();
 
     if (!LoginState.completed) {
-      browserHistory.push('/login');
       alert("请先登录");
     }
 

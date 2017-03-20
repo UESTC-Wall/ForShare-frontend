@@ -71,10 +71,9 @@ class App extends React.Component {
         if (error || response.status !== 201) {
           console.log("source push error!");
           alert("发布失败，请稍后再试");
-          this.deleteInputValue();
         } else {
           alert("发布成功");
-          this.deleteInputValue();
+          this.setState({ sugContent: "" });
         }
       });
   }
@@ -141,7 +140,7 @@ class App extends React.Component {
             <Modal.Body>
               <form onSubmit={this.publish}>
                 <FormGroup bsSize="large" validationState={this.state.sugValidationState}>
-                  <FormControl componentClass="textarea" placeholder={this.state.sugPlaceholder} value={this.state.sugContent} />
+                  <FormControl componentClass="textarea" placeholder={this.state.sugPlaceholder} value={this.state.sugContent} onChange={this.handleChange} />
                   <Button bsStyle="danger" onClick={this.close}>取消</Button>
                   <Button bsStyle="danger" type="submit">确认</Button>
                 </FormGroup>

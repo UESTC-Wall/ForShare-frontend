@@ -101,7 +101,7 @@ class LoginStatusUI extends React.Component {
   render() {
     if (!LoginState.completed) {
       return (
-        <NavItem onClick={this.showTheModal}>登陆
+        <NavItem onClick={this.showTheModal}>登录
           <Modal
             show={this.state.showModal}
             onHide={this.close}

@@ -28,13 +28,17 @@
     background: #303030;
 }
 .write-source form{
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 50%;
   margin-top: 150px;
 }
-.form-group-custom textarea{
-  height: 150px;
+.write-source form .form-group{
+  width: 80%;
 }
-.write-source button{
-  width: 20%;
+.write-source form button{
+  width: 80%;
   border-radius: 3px;
 }

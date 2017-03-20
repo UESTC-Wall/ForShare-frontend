@@ -5,38 +5,27 @@
   margin: auto;
   margin-top: 1em;
   align-items: center;
-  width: 30%;
+  width: 50%;
   background-color: #fff;
   padding-top: 1em; 
   padding-bottom: 4em;
   border-radius: 5px;
 }
-
 .usercreate form{
-  width: 76%;
+  width: 80%;
   margin-top: 2em;
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: column;
 }
-
-.usercreate .input-group-custom{
-  margin: auto;
-  width: 100%;
+.usercreate form span{
+  margin-top: 1.4em;
+}
+.usercreate .input-group input{
+  width: 80%;
   height: 40px;
 }
-.usercreate .input-group-danger{
-  width: 100%;
-  height: 40px;
-}
-.usercreate .input-group-custom input{
-  height: 40px;
-}
-
-.usercreate button{
-  margin-top: 1em;
-  width: 76%;
-}
-
-.usercreate .error-reminder{
-  color: red;
-  margin: 1em auto -2em auto;
-  display: none;
+.usercreate form button{
+  margin: 1.6em auto auto auto;
+  width: 90%;
 }

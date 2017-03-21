@@ -62,8 +62,8 @@ class UserCreate extends React.Component {
     } else if (re) {
       this.setState({ passWordOnceError: "密码不能是纯数字！" });
       this.passWordOnceError();
-    } else if (this.state.passWordOnce.length > 20 || this.state.passWordOnce.length < 6) {
-      this.setState({ passWordOnceError: "必须为6-20个字符！" });
+    } else if (this.state.passWordOnce.length > 20 || this.state.passWordOnce.length < 8) {
+      this.setState({ passWordOnceError: "必须为8-20个字符！" });
       this.passWordOnceError();
     } else {
       this.setState({ passWordOnceError: null });

@@ -61,18 +61,7 @@ class LoginStatusUI extends React.Component {
           browserHistory.push("/linksourcelist");
           this.setState({ userName: "" });
           this.setState({ passWord: "" });
-          ajax.get(`${baseUrl}/users/`)
-          .end((error2, response1) => {
-            if (!error2 && response1) {
-              LoginState.userid =
-              response1.body.results.find(user => user.username === content.username).id;
-            } else {
-              console.log("id fetch error!");
-              alert("登陆失败，请稍后再试");
-              this.setState({ userName: "" });
-              this.setState({ passWord: "" });
-            }
-          });
+          LoginState.userid = response.body.userid;
         }
       });
   }

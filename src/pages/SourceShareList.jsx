@@ -120,7 +120,7 @@ export default function createSourceShareList(sourceType) {
                   <p>{urlIntroduce}</p>
                   <LinkContainer to={`/${sourceType}/${id}`}>
                     <NavItem>
-                      <Button bsStyle="danger" onClick={this.handleUrlreadcountChange(id, urlReadCount)}>了解详情</Button>
+                      <Button bsStyle="danger" onClick={() => this.handleUrlreadcountChange(id, urlReadCount)}>了解详情</Button>
                     </NavItem>
                   </LinkContainer>
                 </div>

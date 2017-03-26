@@ -18,25 +18,8 @@ class Editor extends React.Component {
         connectionCount: 3,
         leaveConfirm: 'Uploading is in progress, are you sure to leave this page?',
       },
-      toolbar: [
-        'title',
-        'bold',
-        'italic',
-        'underline',
-        'strikethrough',
-        'fontScale',
-        'color',
-        'ol',
-        'ul',
-        'blockquote',
-        'code',
-        'table',
-        'image',
-        'link',
-        'hr',
-        'outdent',
-        'alignment',
-      ]
+      toolbar: ['title', 'bold', 'italic', 'underline', 'strikethrough', 'fontScale', '|', 'ol',
+        'ul', 'blockquote', 'code', 'table', '|', 'link', 'image', 'hr', '|', 'indent', 'outdent', 'alignment']
     });
 
     if (this.props.content !== undefined) {

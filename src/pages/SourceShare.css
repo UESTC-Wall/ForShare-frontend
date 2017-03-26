@@ -38,6 +38,9 @@
   width: 100%;
   border-radius: 4px;
 }
+.source-share .source-content code{
+  font-family: "fira code", 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
 .source-share .source-content .content-title{
   font-size: 30px;
   font-weight: bold;

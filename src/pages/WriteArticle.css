@@ -45,6 +45,9 @@
 .editor form .simditor{
   width: 100%;
 }
+.editor form .simditor code{
+  font-family: "fira code", 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
 .editor form button{
   margin-top: 1em;
   width: 60%;

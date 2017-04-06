@@ -64,7 +64,7 @@ export default function createSource(sourceType) {
           .end((error, response) => {
             if (!error && response) {
               this.setState({ resource: response.body });
-              this.setState({ urlPublishTime: response.body.urlpublish_time.slice(0, 16) });
+              this.setState({ urlPublishTime: response.body.created.slice(0, 16) });
               this.setState({ commentLength: response.body.urlcomment_set.length });
             } else {
               console.log("resource fetching error!");
@@ -75,7 +75,7 @@ export default function createSource(sourceType) {
           .end((error, response) => {
             if (!error && response) {
               this.setState({ resource: response.body });
-              this.setState({ urlPublishTime: response.body.publish_time.slice(0, 16) });
+              this.setState({ urlPublishTime: response.body.created.slice(0, 16) });
               this.setState({ commentLength: response.body.articlecomment_set.length });
             } else {
               console.log("resource fetching error!");
@@ -116,7 +116,8 @@ export default function createSource(sourceType) {
       this.setState({ commentContent: event.target.value.trim() });
     }
 
-    pushComment = () => {
+    pushComment = (event) => {
+      event.preventDefault();
       if (!LoginState.completed) {
         browserHistory.push("login");
       } else if (!this.state.commentContent) {
@@ -158,8 +159,8 @@ export default function createSource(sourceType) {
       let urlmessage;
       let content;
       if (sourceType !== "article") {
-        userId = this.state.resource.username;
-        owner = this.state.resource.owner;
+        userId = this.state.resource.usernameid;
+        owner = this.state.resource.url_owner;
         publishTime = this.state.urlPublishTime;
         title = this.state.resource.urlintroduce;
         urlmessage = this.state.resource.urlmessage;
@@ -192,10 +193,10 @@ export default function createSource(sourceType) {
             <div className="comment-list">
               {
                 this.state.comments.map((comment) => {
-                  const username = comment.ownername;
-                  const commentTime = comment.comment_time.slice(0, 16);
+                  const username = comment.comment_owner;
+                  const commentTime = comment.created.slice(0, 16);
                   const ccontent = comment.content;
-                  const cuserId = comment.username;
+                  const cuserId = comment.usernameid;
 
                   return (
                     <div className="comment" key={cuserId}>

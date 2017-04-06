@@ -40,7 +40,7 @@ export default function createSourceShareList(sourceType) {
       this.loadSourceFromServer();
     }
 
-    handleUrlreadcountChange = (id, count) => {
+    handleReadCountChange = (id, count) => {
       if (sourceType !== "article") {
         ajax.patch(`${baseUrl}/urlpublish/${id}/`)
         .send({ urlreadcount: ++count })
@@ -95,15 +95,15 @@ export default function createSourceShareList(sourceType) {
                 userName = source.article_owner;
                 userId = source.usernameid;
                 urlIntroduce = source.article_abstract;
-                urlPubulishTime = source.publish_time.slice(0, 16);
+                urlPubulishTime = source.created.slice(0, 16);
                 urlReadCount = source.article_readcount;
                 commentLength = source.articlecomment_set.length;
               } else {
                 id = source.id;
-                userName = source.owner;
-                userId = source.username;
+                userName = source.url_owner;
+                userId = source.usernameid;
                 urlIntroduce = source.urlintroduce;
-                urlPubulishTime = source.urlpublish_time.slice(0, 16);
+                urlPubulishTime = source.created.slice(0, 16);
                 urlReadCount = source.urlreadcount;
                 commentLength = source.urlcomment_set.length;
               }
@@ -120,7 +120,7 @@ export default function createSourceShareList(sourceType) {
                   <p>{urlIntroduce}</p>
                   <LinkContainer to={`/${sourceType}/${id}`}>
                     <NavItem>
-                      <Button bsStyle="danger" onClick={() => this.handleUrlreadcountChange(id, urlReadCount)}>了解详情</Button>
+                      <Button bsStyle="danger" onClick={() => this.handleReadCountChange(id, urlReadCount)}>了解详情</Button>
                     </NavItem>
                   </LinkContainer>
                 </div>

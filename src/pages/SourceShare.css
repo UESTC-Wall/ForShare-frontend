@@ -18,7 +18,7 @@
   margin-top: -1em;
 }
 .source .source-title button{
-  margin-left: 69%;
+  float: right;
   border: none;
 }
 .source b{

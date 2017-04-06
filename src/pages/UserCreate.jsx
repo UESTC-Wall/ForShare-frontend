@@ -1,6 +1,6 @@
 import React from 'react';
 import ajax from 'superagent';
-import { FormGroup, FormControl, Button, Popover, OverlayTrigger } from 'react-bootstrap';
+import { FormGroup, FormControl, Button, Popover, OverlayTrigger, ProgressBar } from 'react-bootstrap';
 
 import './UserCreate.css';
 import baseUrl from './config';
@@ -12,6 +12,7 @@ class UserCreate extends React.Component {
     this.state = {
       userNameValidationState: null,
       userNameError: null,
+      userNameProgress: null,
       passWordOnceValidationState: null,
       passWordOnceError: null,
       passWordSecondValidationState: null,
@@ -37,14 +38,38 @@ class UserCreate extends React.Component {
     const regex = /[0-9a-zA-Z_\@\.\+\-]{1,30}/;
     const re = regex.test(this.state.userName);
 
-    if (!re) {
-      this.setState({ userNameError: "用户名不合法！" });
-      this.setState({ userNameValidationState: "error" });
-      this.setState({ formValidation: false });
-    } else {
-      this.setState({ userNameError: null });
-      this.setState({ formValidation: true });
-      this.setState({ userNameValidationState: "success" });
+    if (this.jugdeInputValue([this.state.userName.trim()])) {
+      if (!re) {
+        this.setState({ userNameError: "用户名不合法！" });
+        this.setState({ userNameValidationState: "error" });
+        this.setState({ formValidation: false });
+      } else {
+        const progress = <ProgressBar active now={100} bsStyle="success" />;
+        this.setState({ userNameProgress: progress });
+        const promise = new Promise((resolve, reject) => {
+          ajax.post(`${baseUrl}/usercreate/`)
+        .send({ username: this.state.userName })
+        .end((error, response) => {
+          if (response.status === 200) {
+            reject();
+          } else {
+            resolve();
+          }
+        });
+        });
+
+        promise.then(() => {
+          this.setState({ userNameValidationState: "success" });
+          this.setState({ userNameProgress: null });
+          this.setState({ userNameError: null });
+          this.setState({ formValidation: true });
+        }, () => {
+          this.setState({ userNameValidationState: "error" });
+          this.setState({ userNameError: "该用户名已被使用" });
+          this.setState({ formValidation: false });
+          this.setState({ userNameProgress: null });
+        });
+      }
     }
   }
 
@@ -57,17 +82,20 @@ class UserCreate extends React.Component {
     const re = regex.test(this.state.passWordOnce);
 
     if (this.state.passWordOnce === this.state.userName) {
-      this.setState({ passWordOnceError: "不得与用户名相同！" });
-      this.passWordOnceError();
+      if (this.jugdeInputValue([this.state.userName.trim()])) {
+        this.setState({ passWordOnceError: "不得与用户名相同！" });
+        this.passWordOnceError();
+      }
     } else if (re) {
       this.setState({ passWordOnceError: "密码不能是纯数字！" });
       this.passWordOnceError();
-    } else if (this.state.passWordOnce.length > 20 || this.state.passWordOnce.length < 8) {
-      this.setState({ passWordOnceError: "必须为8-20个字符！" });
-      this.passWordOnceError();
+    } else if ((this.state.passWordOnce.length > 20 || this.state.passWordOnce.length < 8)) {
+      if (this.jugdeInputValue([this.state.userName.trim()])) {
+        this.setState({ passWordOnceError: "必须为8-20个字符！" });
+        this.passWordOnceError();
+      }
     } else {
       this.setState({ passWordOnceError: null });
-      this.setState({ formValidation: true });
       this.setState({ passWordOnceValidationState: "success" });
     }
   }
@@ -82,11 +110,13 @@ class UserCreate extends React.Component {
   }
 
   handlePassWordSecondUnBlur = () => {
-    if (this.state.passWordOnce !== this.state.passWordSecond ||
-      this.state.passWordSecond.length === 0) {
-      this.setState({ passWordSecondError: "与第一次的密码不一致！" });
-      this.setState({ formValidation: false });
-      this.setState({ passWordSecondValidationState: "error" });
+    if ((this.state.passWordOnce !== this.state.passWordSecond ||
+      this.state.passWordSecond.length === 0)) {
+      if (this.jugdeInputValue([this.state.userName.trim(), this.state.passWordOnce])) {
+        this.setState({ passWordSecondError: "与第一次的密码不一致！" });
+        this.setState({ formValidation: false });
+        this.setState({ passWordSecondValidationState: "error" });
+      }
     } else {
       this.setState({ formValidation: true });
       this.setState({ passWordSecondError: null });
@@ -103,9 +133,12 @@ class UserCreate extends React.Component {
     const re = regex.test(this.state.email);
 
     if (!re) {
-      this.setState({ emailError: "邮箱地址有误！" });
-      this.setState({ formValidation: false });
-      this.setState({ emailValidationState: "error" });
+      if (this.jugdeInputValue([this.state.userName.trim(),
+        this.state.passWordOnce, this.state.passWordSecond])) {
+        this.setState({ emailError: "邮箱地址有误！" });
+        this.setState({ formValidation: false });
+        this.setState({ emailValidationState: "error" });
+      }
     } else {
       this.setState({ formValidation: true });
       this.setState({ emailError: null });
@@ -119,13 +152,25 @@ class UserCreate extends React.Component {
 
   handleClassUnBlur = () => {
     if (this.state.class.length > 6 || this.state.class.length < 4) {
-      this.setState({ classError: "年级无效！" });
-      this.setState({ formValidation: false });
-      this.setState({ classValidationState: "error" });
+      if (this.jugdeInputValue([this.state.userName.trim(), this.state.passWordOnce,
+        this.state.passWordSecond, this.state.email])) {
+        this.setState({ classError: "年级无效！" });
+        this.setState({ formValidation: false });
+        this.setState({ classValidationState: "error" });
+      }
     } else {
       this.setState({ formValidation: true });
       this.setState({ classError: null });
       this.setState({ classValidationState: "success" });
+    }
+  }
+
+  jugdeInputValue = (arry) => {
+    const jugde = arry.findIndex(ele => ele === "");
+    if (jugde === -1) {
+      return 1;
+    } else {
+      return 0;
     }
   }
 
@@ -193,6 +238,7 @@ class UserCreate extends React.Component {
               用户名：<b className="error">{this.state.userNameError}</b>
               <FormControl type="text" value={this.state.userName} onChange={this.handleUserNameChange} onBlur={this.handleUserNameUnBlur} />
               <FormControl.Feedback />
+              {this.state.userNameProgress}
             </FormGroup>
           </OverlayTrigger>
           <OverlayTrigger trigger={['hover', 'focus']} placement="top" overlay={passWordOncePopoverHoverFocus}>

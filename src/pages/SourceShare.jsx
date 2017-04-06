@@ -43,9 +43,7 @@ export default function createSource(sourceType) {
       this.state = {
         resource: [],
         comments: [],
-        commentsOwnerNames: [],
         urlPublishTime: 0,
-        commentLength: 0,
         inputValidationState: null,
         inputPlaceholder: "写下你的评论..",
         commentContent: ""
@@ -65,7 +63,6 @@ export default function createSource(sourceType) {
             if (!error && response) {
               this.setState({ resource: response.body });
               this.setState({ urlPublishTime: response.body.created.slice(0, 16) });
-              this.setState({ commentLength: response.body.urlcomment_set.length });
             } else {
               console.log("resource fetching error!");
             }
@@ -86,26 +83,7 @@ export default function createSource(sourceType) {
       ajax.get(`${baseUrl}/${commentUrl}/?comment1=${this.props.params.id}`)
         .end((error, response) => {
           if (!error && response) {
-            const rawComments = response.body.results;
-            ajax.get(`${baseUrl}/users/`)
-              .end((error1, response1) => {
-                if (!error1 && response1) {
-                  const users = response1.body.results;
-                  let comments = [];
-                  if (sourceType !== "article") {
-                    comments = rawComments.map(comment => ({
-                      ...comment,
-                      ownername: users.find(user => user.id === comment.username).username,
-                    }));
-                  } else {
-                    comments = rawComments.map(comment => ({
-                      ...comment,
-                      ownername: users.find(user => user.id === comment.usernameid).username,
-                    }));
-                  }
-                  this.setState({ comments });
-                }
-              });
+            this.setState({ comments: response.body.results });
           } else {
             console.log("comments fetching error");
           }
@@ -189,7 +167,7 @@ export default function createSource(sourceType) {
             </div>
           </div>
           <div className="comment-source">
-            <div><h5>{this.state.commentLength} 条评论</h5></div>
+            <div><h5>{this.state.comments.length} 条评论</h5></div>
             <div className="comment-list">
               {
                 this.state.comments.map((comment) => {

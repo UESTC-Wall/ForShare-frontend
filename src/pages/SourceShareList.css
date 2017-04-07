@@ -33,7 +33,6 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  margin-top: 0.6em;
 }
 .source-share-list .source-card{
   margin-bottom: 1em;
@@ -81,5 +80,3 @@
   color: #fff;
   border: none;
 }
-
-

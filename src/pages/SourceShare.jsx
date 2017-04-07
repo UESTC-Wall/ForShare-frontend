@@ -62,7 +62,7 @@ export default function createSource(sourceType) {
           .end((error, response) => {
             if (!error && response) {
               this.setState({ resource: response.body });
-              this.setState({ urlPublishTime: response.body.created.slice(0, 16) });
+              this.setState({ urlPublishTime: response.body.created });
             } else {
               console.log("resource fetching error!");
             }
@@ -72,7 +72,7 @@ export default function createSource(sourceType) {
           .end((error, response) => {
             if (!error && response) {
               this.setState({ resource: response.body });
-              this.setState({ urlPublishTime: response.body.created.slice(0, 16) });
+              this.setState({ urlPublishTime: response.body.created });
               this.setState({ commentLength: response.body.articlecomment_set.length });
             } else {
               console.log("resource fetching error!");
@@ -172,7 +172,7 @@ export default function createSource(sourceType) {
               {
                 this.state.comments.map((comment) => {
                   const username = comment.comment_owner;
-                  const commentTime = comment.created.slice(0, 16);
+                  const commentTime = comment.created;
                   const ccontent = comment.content;
                   const cuserId = comment.usernameid;
 

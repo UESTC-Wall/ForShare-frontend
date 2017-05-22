@@ -24,11 +24,12 @@ class WriteSourceLink extends React.Component {
     this.setState({ urlValue: event.target.value.trim() });
   }
 
-  publish = () => {
+  publish = (event) => {
     if (!LoginState.completed) {
       alert("请先登录");
       return;
     }
+    event.preventDefault();
     const urlMessage = this.state.urlValue;
 
     if (!urlMessage) {
@@ -75,7 +76,7 @@ class WriteSourceLink extends React.Component {
           <FormGroup bsSize="large" validationState={this.state.urlValueValidationState}>
             <FormControl type="text" placeholder={this.state.urlValuePlaceholde} value={this.state.urlValue} onChange={this.handleChange} />
           </FormGroup>
-          <Button bsStyle="danger" bsSize="large" onClick={this.publish}>提交</Button>
+          <Button bsStyle="danger" bsSize="large" type="submit">提交</Button>
         </form>
       </div>
     );

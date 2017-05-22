@@ -177,7 +177,7 @@ export default function createSource(sourceType) {
                   const cuserId = comment.usernameid;
 
                   return (
-                    <div className="comment" key={cuserId}>
+                    <div className="comment" key={commentTime}>
                       <p><b>来自</b><b className="b-comment-username"><Link to={`/user/${cuserId}`}>{username}</Link></b><b className="b-comment-time">{commentTime}</b></p>
                       <p>{ccontent}</p>
                     </div>

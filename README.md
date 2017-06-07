@@ -18,3 +18,13 @@ yarn start
 ## 修改以前用户名、用户 id 混乱的情况解决，更改了几个名字（已标注）
 ## 修改 create time 统一为 created（ 已标注）
 ## 约定蓝色字为文档新修改内容
+
+## screenshot
+### 主页
+![homepage](screenshot/homepage.png)
+### 分享链接
+![source-link](screenshot/source-link.png)
+### 分享文章
+![source-article](screenshot/source-article.png)
+### 编辑文章
+![article-write](screenshot/article-write.png)
